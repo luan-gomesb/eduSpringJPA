@@ -1,8 +1,10 @@
 package br.com.lgomesb.EducativeJpa.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "Player")
@@ -14,11 +16,12 @@ public class Player{
 
     private String name;
     private String nationality;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     private int titles;
 
-    public Player() {
-    }
+    public Player() {}
 
     public Player(int id, String name, String nationality, Date birthDate, int titles) {
         this.id = id;
@@ -65,6 +68,11 @@ public class Player{
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        SimpleDateFormat sqlDate = new SimpleDateFormat("YYYY-mm-dd");
+        this.birthDate =  Date.valueOf(birthDate);
     }
 
     public int getTitles() {
